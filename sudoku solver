@@ -1,0 +1,34 @@
+def solveSudoku(grid):
+row, col = findEmptyCell(grid)
+if row == -1 and col == -1:
+return True
+for num in range(1, 10):
+if isValid(grid, row, col, num):
+grid[row][col] = num
+if solveSudoku(grid):
+return True
+grid[row][col] = 0
+return False
+def isValid(grid, row, col, num):
+# Check row
+for i in range(9):
+if grid[row][i] == num:
+return False
+# Check column
+for j in range(9):
+if grid[j][col] == num:
+return False
+# Check 3x3 sub-grid
+sub_row = (row // 3) * 3
+sub_col = (col // 3) * 3
+for i in range(sub_row, sub_row + 3):
+for j in range(sub_col, sub_col + 3):
+if grid[i][j] == num:
+return False
+return True
+def findEmptyCell(grid):
+for i in range(9):
+for j in range(9):
+if grid[i][j] == 0:
+return (i, j)
+return (-1, -1)
